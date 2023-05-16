@@ -1,0 +1,63 @@
+import time
+
+t=time
+
+diff = 0
+xini = 12
+yini =0
+area = 0
+finarea=[]
+loopnum = 0
+print("Out of loop")
+print("Initial x values is" + str(xini))
+print("Initial y values is" +str(yini))
+print("  ")
+
+t.sleep(1)
+
+
+
+while diff <= 12 :
+
+    finarea=[]
+    x = xini-diff
+    y = yini+diff
+
+    
+    print("In loop varible check")
+    print("START OF LOOP:" + str(loopnum) )
+    print("Current x value" + str(x))
+    print("Current y value" + str(y))
+    print("Current difference" + str(diff) )
+   
+    t.sleep(0.1)
+    
+    
+    if x > y:
+        print("When x is greater than y by:")
+        print(x-y)
+    elif x == y:
+        print("When x and y are same at a value of:"+ str(x))
+        
+    else:
+        print("When y is greater than x by:")
+        print(y-x)
+    t.sleep(0.1)
+    
+    area=x*y
+    finarea.append(area)
+    print("Area is = " + str(area))
+
+    diff = diff+1
+    loopnum = loopnum + 1
+    print("  ")
+    t.sleep(0.1)
+    
+
+    
+print("Final varible check")
+print(x)
+print(y)
+print("list of areas")
+print(finarea)
+print(max(finarea))
