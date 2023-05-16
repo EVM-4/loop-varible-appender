@@ -45,8 +45,9 @@ while diff <= 12 :
     t.sleep(0.1)
     
     area=x*y
-    finarea.append(area)
     print("Area is = " + str(area))
+    finarea.append(area)
+    print(finarea)
 
     diff = diff+1
     loopnum = loopnum + 1
