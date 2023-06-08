@@ -1,0 +1,128 @@
+import time
+
+t=time
+
+print("Wellcome to max area generator with fixed parameter")
+print(" You will need to provide the value for P/2 in the equation x + y = P/2")
+print("X and Y will be the possible lenghts and breaths which we can use to form paramemter")
+print("You will also need to input a value for number of loops. More loops means smaller incriments and more time")
+#Make an if else statement if they understand if yes continue if no restart program
+loopamt = int(input("How many loops you want?"))
+halfperi = int(input("What is half of the perimeter (L+B)??"))
+diff = 0
+area = 0
+finarea=[]
+diffchange = halfperi / loopamt
+loopnum = 0
+print("Out of loop")
+print("Initial x values is P/2 which is basically = " + str(halfperi))
+print("Initial y values is 0")
+print("You want " + str(loopamt) + " which means we will have an incriment of " + str(diffchange))
+amogus = str(input("Do u want to see loopdata(varible per loop)? - type 'ok' "))
+print("  ")
+
+
+
+
+t.sleep(5)
+
+
+
+while diff <= halfperi :
+
+    print("START OF LOOP:" + str(loopnum) )
+
+    x = halfperi-diff
+    y = 0+diff
+    
+    area=x*y
+
+
+    
+    finarea.append(area)
+
+
+    if amogus == "ok" :
+        print("In loop varible check") 
+        print("Current x value" + str(x))
+        print("Current y value" + str(y))
+        print("Current difference" + str(diff))
+        
+        if x > y:
+            print("When x is greater than y by:")
+            print(x-y)
+        elif x == y:
+            print("When x and y are same at a value of:"+ str(x))
+        
+        else:
+            print("When y is greater than x by:")
+            print(y-x)
+
+        print("Area is = " + str(area))
+        print(finarea)
+
+        
+    else:
+        print("Data stored but not printed")
+   
+    t.sleep(0.1)
+    
+    
+ 
+  
+    
+ 
+    
+    print("END OF LOOP " + str(loopnum))
+    diff = diff + diffchange
+    loopnum = loopnum + 1
+
+    
+   
+    print("  ")
+    t.sleep(0.1)
+    
+
+
+
+
+
+
+    
+print("Final varible check")
+print(x)
+print(y)
+print("list of areas")
+print(finarea)
+maxarea = max(finarea)
+print("Max value is " + str(maxarea))
+moreinfo = input("You want more information? y/n")
+
+if moreinfo == "y" :
+    print("Max value is " + str(maxarea))
+    print("Max value at loop # " + str(finarea.index(maxarea)))
+    specificxval = halfperi - ((finarea.index(maxarea)*diffchange))
+    print("x value is " + str(specificxval))
+    specificyval = 0 + ((finarea.index(maxarea)*diffchange))
+    print("y value is " + str(specificyval))
+
+else:
+    print("Ok")
+
+print("bye")
+wannare = str(input("Wanna restart program? y/n"))
+
+if wannare == "y":
+    def restart():
+        import sys
+        print("argv was",sys.argv)
+        print("sys.executable was", sys.executable)
+        print("restart now")
+
+        import os
+        os.execv(sys.executable, ['python'] + sys.argv)
+
+    restart()
+else:
+    print("bye")
+
