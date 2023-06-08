@@ -1,0 +1,42 @@
+import time
+
+hp = int(input("What is your half perimeter?"))
+loopnum = int(input("How many loops you want"))
+ppl = bool(input("Want info per loop? (0 for no , any thing else for yes)"))
+addinfo = bool(input("Want additional info? (0 for no , any thing else for yes)"))
+
+
+
+
+
+def areafinder(hp,loopnum,ppl,addinfo):
+    totarea = []
+    diff = hp/loopnum
+    l = 1
+    while l <= loopnum:
+        difftest = diff * l
+        x = 0 + difftest
+        y = hp - difftest
+        area = x * y
+        totarea.append(area)
+        if ppl == "True":
+            print(f"This is loop number{l} x is {x} and y is {y}, area is {area} ")
+        l = l + 1
+
+        time.sleep(0.1)
+    if addinfo == "True":
+        print(f"All areas{totarea}")
+        loopofmaxarea = totarea.index(max(totarea))+1
+        print(f"Max area",max(totarea),"occured at loop number ",loopofmaxarea)
+        print("The x and y values are ",(diff * loopofmaxarea), " and ",(hp - (diff * loopofmaxarea))," respectivily" )
+
+    else:
+        print(f"Max area is {max(totarea)}")
+
+
+
+
+
+areafinder(hp,loopnum,ppl,addinfo)
+
+
