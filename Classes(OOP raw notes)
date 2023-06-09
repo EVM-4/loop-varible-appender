@@ -1,0 +1,245 @@
+#Python courses 7/6/2023
+
+
+class MBT:
+
+    procure_amt = int(20)
+
+    tank_type = 0
+
+    #defining the class
+    def __init__(self,name,designation,codename,storage_amt): #giving attributes we want
+        self.name = name
+        self.designation = designation
+        self.codename = codename
+        self.storage_amt = storage_amt
+
+        MBT.tank_type +=1
+    #action in class - method
+
+    @property #Fucking awesome (Setter - method to attribute)
+    def fullname(self): #performing action based on data(?) from attributes
+        return("{}:{}".format(self.name, self.codename))
+
+    def procure(self,procure_change):
+        procure_change = int(procure_change)
+        self.storage_amt = int(self.storage_amt+self.procure_amt+procure_change)
+
+        #Instance varible(?)
+    @classmethod
+    def set_procure_amount(cls,amt):
+        cls.procure_amt = amt
+
+    @classmethod
+
+    def creat_class(cls,Tankdata):
+        n, d, c, s = Tankdata.split("#")
+        s = int(s)
+        return  cls(n, d, c, s) #Return is important
+
+    @staticmethod
+
+    def num_five_tester(num): #No relation to class vars
+        if num == 5:
+            return  True
+        else:
+            return False
+
+    def __repr__(self):
+        pass
+        return("MBT('{}','{}','{}','{}')").format(self.name,self.designation,self.codename,self.storage_amt)
+        #return (f"MBT('{self.name}','{self.designation}','{self.codename}','{self.storage_amt}')") (Why you dont work!)
+    def __str__(self):
+        return (f"MBT('{self.fullname}','{self.procure_amt}')")#NOW YOU WORK
+    def __add__(self,other):
+        return(int.__add__(self.storage_amt,other.storage_amt))
+    def __len__(self):
+
+        return(f"{self.fullname}".__len__())
+
+    @fullname.setter
+    def fullname(self,fullname):
+        first, last = fullname.split(":")
+        self.name = first
+        self.codename = last
+
+
+
+class LT(MBT): #Inheriting data from MBT class
+    procure_amt = int(10)
+
+    def __init__(self, name, designation, codename, weight ,storage_amt):  #basic init function
+
+        super().__init__( name, designation, codename, storage_amt)# calling parents init function for common attributes
+        self.weight = weight #Need to use self, not class name
+
+        LT.tank_type += 1
+    @classmethod
+    def creat_class(cls, Tankdata):
+        n, d, c, w, s = Tankdata.split("#")
+        s = int(s)
+        return cls(n, d, c, w, s)  # Return is important
+
+class IFV(MBT):
+    procure_amt = int(50)
+
+    def __init__(self, name, designation, codename, Infantry_capacity ,storage_amt):  #basic init function
+
+        super().__init__( name, designation, codename, storage_amt)# calling parents init function for common attributes
+        self.Infantry_capacity = Infantry_capacity  #Need to use self, not class name
+
+        IFV.tank_type += 1
+    @classmethod
+    def creat_class(cls, Tankdata):
+        n, d, c, i, s = Tankdata.split("#")
+        s = int(s)
+        return cls(n, d, c, i, s)  # Return is important
+
+class ARV(MBT):
+    def __init__(self,name,designation,codename,storage_amt,cancarry=None):
+        super().__init__(name,designation,codename,storage_amt)
+        self.cancarry = cancarry
+        if cancarry is None:
+            self.cancarry = []
+        else:
+            self.cancarry = cancarry
+    def addcarry(self, AV):
+        if AV not in self.cancarry:
+            self.cancarry.append(AV)
+
+    def removecarry(self, AV):
+        if AV not in self.cancarry:
+            self.cancarry.pop(AV)
+    def printcarry(self):
+        for AV in self.cancarry:
+            print(AV.fullname())
+
+MBT_N1 = MBT("T-90","T-90-M","Bhishma",83) #instance of a class
+MBT_N2 = MBT("T-72","T-72-K","Ajeya",54) #New instance can be made with attributes
+MBT_N3 = MBT("LT-15","AFV-ILT","Zorawar",0) #Made to test the tank_type varible
+#print(MBT.tank_type)# varible modified(?) every time an __init__ (class instance) is made.
+
+
+
+ARV_N1 = ARV("WZT-3","WZT-3M1","Chauhan",34,[MBT_N2])
+
+
+#Speical methods
+ARV_N1.fullname = "MKX: Sengol"
+print(ARV_N1.fullname) #Works
+
+print(repr(MBT_N3))
+print(str(MBT_N3))
+
+print(str(ARV_N1))
+print(repr(ARV_N1))
+
+print(int.__add__(4,3))
+print(str.__add__("a",'adddg'))
+
+#Need practise
+print(MBT_N2 + MBT_N1)
+
+print(len(MBT_N1))
+
+#Getter Setter Deleter
+
+
+
+
+
+
+
+LT_N1 = LT("Type-15","LT-15K","Zang nang", "15 tonnes",6) #Class with inheritance from MBT
+
+IFV_N1 = IFV.creat_class("BMP-2#BMP-2-15V#Opelot#6#30")#Class with inheritance from MBT as well
+
+
+
+
+#Testing procurment of subclasses
+#print(IFV_N1.storage_amt)
+#print(IFV.procure_amt)
+IFV.set_procure_amount(4)
+IFV_N1.procure(0)
+#print(IFV_N1.storage_amt)
+
+
+#Same here
+
+#print(LT_N1.__dict__)
+#print(LT_N1.storage_amt)
+LT_N1.procure(0)
+#print(LT_N1.storage_amt)
+
+
+#MBT_N1.procure_amt = 10
+
+#print(MBT.procure_amt)
+
+
+
+#print(MBT.procure_amt)
+#print(MBT_N1.procure_amt)
+#print(MBT_N2.procure_amt)
+#print(MBT_N3.procure_amt)
+
+# static method
+
+#No relation to class or instance varibles
+
+#print(MBT.num_five_tester(5))
+
+
+
+
+
+
+#Alternative constructor(Creates an instance through a class fuction)
+
+#Data we want to transform(?) into instances
+
+#Manual (Creating all code ourselfs)
+
+Tank_data_1 = ("Name#Designation#Codename#10")
+n, d, c, s = Tank_data_1.split("#")
+
+#MBT_N4M1 = MBT(n,d,c,s)
+
+#print(MBT_N4M1.__dict__)
+
+#Automatic - using fuction to create classes
+
+MBT_N4 = MBT.creat_class("Name#Designation#Codename#10") #Assign varible ourselfs still
+
+#print(MBT.tank_type) #Num of tank types (include subclasses?)
+
+#print(MBT_N4.storage_amt)
+MBT_N4.procure(0)
+#print(MBT_N4.storage_amt)
+
+#print(MBT_N2.storage_amt)#print class instance's desired attribute
+
+#print(MBT_N1.fullname())# print value of fucntion/method
+
+#print(MBT_N1) #where it is stored in memory
+
+#print(MBT.__dict__) #All "stuff in class"
+
+
+#MBT_N1.procure_amt = 10 #Modifing a class varible per instance (Creates a varible for class)
+
+
+#print(MBT_N1.__dict__)# all value pairs in class instance
+
+
+
+
+
+
+
+
+#method - function in a class
+
+#assume we want full name for tank(manual)(Manual method)
+#print("{}:{}".format(MBT_Mk1.name,MBT_Mk1.codename))
