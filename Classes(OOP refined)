@@ -1,0 +1,117 @@
+from typing import List, Dict, Set, Optional, Any, Tuple #Useless???
+
+
+class MBT:
+
+    procure_amt:int = 20
+
+    tank_type:int = 0
+
+    #defining the class
+    def __init__(self,name:str,designation:str,codename:str,storage_amt:int) ->None: #giving attributes we want
+        self.name = name
+        self.designation = designation
+        self.codename = codename
+        self.storage_amt = int(storage_amt) # Making it int for concatination in procure function(Ln25)
+
+        MBT.tank_type +=1
+    #action in class - method
+
+    @property #awesome (Setter - method to attribute)
+    def fullname(self) -> str: #performing action based on data from attributes
+        return(f"{self.name}:{self.codename}")
+
+    def procure(self,procure_change:int) -> None:
+        self.storage_amt:int = self.storage_amt + self.procure_amt +procure_change
+
+        #Instance varible
+    @classmethod
+    def set_procure_amount(cls,amt:int) -> None:
+        cls.procure_amt:int = amt #int(amt) better ?
+
+    @classmethod
+
+    def creat_class(cls,Tankdata:str) -> [str,str,str,int]:
+        n, d, c, s = Tankdata.split("#")
+        s:int = s
+        return  cls(n, d, c, s) #Return is important
+
+    @staticmethod
+
+    def num_five_tester(num:int) -> bool:
+        if num == 5:
+            return  True
+        else:
+            return False
+
+    def __repr__(self) -> str:
+        return(f"MBT({self.name},{self.designation},{self.codename},{self.storage_amt})")
+
+    def __str__(self) -> str:
+        return (f"MBT({self.fullname},{self.procure_amt})")#NOW YOU WORK
+
+    def __add__(self,other) -> int:
+        return(int.__add__(self.storage_amt,other.storage_amt))
+
+    def __len__(self) -> int:
+        return(f"{self.fullname}".__len__())
+
+    @fullname.setter
+    def fullname(self,fullname:str)-> None:
+        first, last = fullname.split(":")
+        self.name:str = first
+        self.codename:str = last
+
+
+
+class LT(MBT): #Inheriting data from MBT class
+    procure_amt:int = 10
+
+    def __init__(self, name:str, designation:str, codename:str, weight:float ,storage_amt:int)-> None:  #basic init function
+
+        super().__init__( name, designation, codename, storage_amt)# calling parents init function for common attributes
+        self.weight = weight #float(weight) ?
+
+        LT.tank_type += 1
+    @classmethod
+    def creat_class(cls, tank_data:str)-> [str,str,str,float,int]:
+        #Asign all vars here?
+        n, d, c, w, s = tank_data.split("#")
+        s:int = s
+        w:float = w
+        return cls(n, d, c, w, s)  
+
+class IFV(MBT):
+    procure_amt:int = 50
+
+    def __init__(self, name:str, designation:str, codename:str, Infantry_capacity:int ,storage_amt:int)->None:  
+
+        super().__init__( name, designation, codename, storage_amt)
+        self.Infantry_capacity = Infantry_capacity  
+
+        IFV.tank_type += 1
+    @classmethod
+    def creat_class(cls, Tankdata:str)->[str,str,str,int,int]:
+        n, d, c, i, s = Tankdata.split("#")
+        s:int = s
+        i:int = i
+        return cls(n, d, c, i, s)  
+
+class ARV(MBT):
+    def __init__(self,name:str,designation:str,codename:str,storage_amt:int,cancarry:Optional[List]=None)->None:
+        super().__init__(name,designation,codename,storage_amt)
+        self.cancarry:List = cancarry
+        if cancarry is None:
+            self.cancarry = []
+        else:
+            self.cancarry = cancarry
+    def addcarry(self, AV:str)->None:
+        if AV not in self.cancarry:
+            self.cancarry.append(AV)
+
+    def removecarry(self, AV:str)->None:
+        if AV not in self.cancarry:
+            self.cancarry.remove(AV)
+    def printcarry(self)->None:
+        for AV in self.cancarry:
+            print(AV.fullname())
